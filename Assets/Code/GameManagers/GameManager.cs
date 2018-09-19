@@ -1,7 +1,14 @@
-﻿using System.Collections.Generic;
+﻿// ----------------------------------------------------------------------------
+//  University of Pittsburgh  
+//  GamesEdu Workshop #2
+//  19 SEPT 2018
+// ----------------------------------------------------------------------------
 using UnityEngine;
 using UnityEngine.Events;
-
+using UnityEngine.SceneManagement;
+/// <summary>
+/// GameManager manages all game systems
+/// </summary>
 public class GameManager : Singleton<GameManager>
 {
     /// <summary>
@@ -10,16 +17,11 @@ public class GameManager : Singleton<GameManager>
     [Header("GameManager ScriptedAsset")]
     public GMData GMData;
 
-    public string titleScene;
-    public string startingScene;
-    public string currentScene;
-
     /// <summary>
     /// Enum to store our game manager instances state
     /// </summary>
     public enum GameState
     {
-        STARTMENU,
         RUNNING,
         PAUSED,
         SCENECHANGE,
@@ -28,7 +30,7 @@ public class GameManager : Singleton<GameManager>
     public SceneController sceneController;
 
     /// <summary>
-    /// Event that will listen for Methods that trigger a game state change. This is the "Hook" other componets will be looking for.
+    /// Event that will notify all subscribers of the GameStateChange Event.
     /// </summary>
     public EventGameState OnGameStateChanged;
     /// <summary>
@@ -47,8 +49,8 @@ public class GameManager : Singleton<GameManager>
     {
         DontDestroyOnLoad(gameObject); // Tells Unity that we do not want to destroy this GameObject on Scene Load
         GMData.CurrentGameState = _currentGameState; // Set the GameManager state to the stores state in GMData
-        sceneController.OnSceneChangeStart.AddListener(HandleSceneChangeStart); // Subscribe or Listen for EventSceneChangeStart
-        sceneController.OnSceneChangeComplete.AddListener(HandleSceneChangeComplete);// Subscribe or Listen for EventSceneChangeComplete
+        sceneController.onSceneChangeStart.AddListener(HandleSceneChangeStart); // Subscribe or Listen for EventSceneChangeStart
+        sceneController.onSceneChangeComplete.AddListener(HandleSceneChangeComplete);// Subscribe or Listen for EventSceneChangeComplete
         OnGameStateChanged.Invoke(GMData.CurrentGameState, _currentGameState); // Let ALL other components listening for EventGameStateChange that the GameState has changed
     }
     /// <summary>
@@ -58,12 +60,11 @@ public class GameManager : Singleton<GameManager>
     {
         // If scene is changing return
         if (_currentGameState == GameState.SCENECHANGE)
-            return;
-        
+            return;        
     }
 
     /// <summary>
-    /// Updates GameState. Is call when another script triggers a state change.
+    /// Updates GameState. Is call when another script triggers a state change. Can also be called directly.
     /// </summary>
     /// <param name="state"></param>
     public void UpdateState(GameState state)
@@ -94,52 +95,79 @@ public class GameManager : Singleton<GameManager>
                 break;
             case GameState.GAMEOVER:
                 // Implement Actions like - Pause player, enemies etc, Lock other input in other systems. 
-                Debug.Log("Game OVER");
-                Time.timeScale = 0.0f;
+                Debug.Log("Game Over");
+                Time.timeScale = 1.0f;
                 break;
 
             default:
                 break;
         }
-        // When this executes it will Notify ALL Scripts that are listening for the EventGameState
+        // When this executes it will Notify ALL Scripts that are subscribed or listening for the EventGameState
         OnGameStateChanged.Invoke(_currentGameState, previousGameState);
     }
-
+    /// <summary>
+    /// Toggles between the PAUSED State and the RUNNING State
+    /// </summary>
     public void TogglePause()
     {
-        //UpdateState(_currentGameState == GameState.RUNNING ? GameState.PAUSED : GameState.RUNNING);
-        if (_currentGameState == GameState.RUNNING)
-            UpdateState(GameState.PAUSED);
-        else
-            UpdateState(GameState.RUNNING);
+        //The ? conditional operator commonly known as the ternary conditional operator, returns one of two values depending on the value of a Boolean expression.
+        UpdateState(_currentGameState == GameState.RUNNING ? GameState.PAUSED : GameState.RUNNING);
+        // Verbose version of the code above.
+        //if (_currentGameState == GameState.RUNNING)
+        //    UpdateState(GameState.PAUSED);
+        //else
+        //    UpdateState(GameState.RUNNING);
     }
-
+    /// <summary>
+    /// Loads the first game level
+    /// </summary>
     public void StartGame()
     {
-        sceneController.FadeAndLoadScene(sceneController.Scenes[1].sceneName);
-    }
+        /// This can be implemented with a Dictionary, or many other more robust ways.
+        sceneController.FadeAndLoadScene(sceneController.Scenes[1].sceneInfo.sceneName);
+        // <-----> Simple way using stored variable declared above, prone to error if string value is a typo
+        // sceneController.FadeAndLoadScene(gameScene);
 
+        // <-----> Hard coded way prone to error if string value is a typo
+        // sceneController.FadeAndLoadScene("gameScene");
+
+    }
+    /// <summary>
+    /// Restarts the current level
+    /// </summary>
     public void RestartLevel()
     {
         sceneController.FadeAndLoadScene(sceneController.CurrentScene);
     }
-
+    /// <summary>
+    /// Quits the game and changes the scene to the TitleMenu
+    /// </summary>
     public void QuitToTitle()
     {
-        sceneController.FadeAndLoadScene(sceneController.Scenes[0].sceneName);
-    }
+        sceneController.FadeAndLoadScene(sceneController.Scenes[0].sceneInfo.sceneName);
 
+        // <-----> Simple way using stored variable declared above, prone to error if string value is a typo
+        // sceneController.FadeAndLoadScene(titleScene);
+
+        // <-----> Hard coded way prone to error if string value is a typo
+        // sceneController.FadeAndLoadScene("TitleScene");
+    }
+    /// <summary>
+    /// Quits the application.
+    /// </summary>
     public void QuitGame()
     {
-        //If we are running in a standalone build of the game
-#if UNITY_STANDALONE
+        //These are called regions. When the C# compiler encounters an #if directive, 
+        //  followed eventually by an #endif directive, it compiles the code between the 
+        //  directives only if the specified symbol is defined. 
+#if UNITY_STANDALONE //If we are running in a standalone build of the game
         //Quit the application
         Application.Quit();
 #endif
 
         //If we are running in the editor
 #if UNITY_EDITOR
-        //Stop playing the scene
+        //Stop playing the scene.
         UnityEditor.EditorApplication.isPlaying = false;
 #endif      
     }
@@ -161,7 +189,7 @@ public class GameManager : Singleton<GameManager>
         UpdateState(GameState.RUNNING); // The Scene change is complete so set the game state to run.
     }
     /// <summary>
-    /// Take 2 Game State Parameters 
+    /// Subclass EventGameState using scoped enum.  
     /// </summary>
     [System.Serializable] public class EventGameState : UnityEvent<GameState, GameState> { }
 }

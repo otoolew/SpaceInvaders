@@ -75,9 +75,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GMData: {fileID: 11400000, guid: 8735bed60442f1b4e88bbaa998d010fc, type: 2}
-  titleScene: TitleScreen
-  startingScene: Prototype
-  currentScene: 
   sceneController: {fileID: 114147430033407720}
   OnGameStateChanged:
     m_PersistentCalls:
@@ -96,23 +93,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Scenes:
-  - IndexBuildId: 0
-    name: TitleScreen
-    description: Game Entry Menu
-    sceneName: TitleScreen
-  - IndexBuildId: 1
-    name: Game
-    description: Core game Scene
-    sceneName: Game
+  - {fileID: 11400000, guid: 2430161c287b2bc4eb96021346ae552f, type: 2}
+  - {fileID: 11400000, guid: 73bcdca7247cff146ae98b322d71a051, type: 2}
   screenFadeCanvas: {fileID: 225122147387427696}
   fadeDuration: 1
   currentScene: TitleScene
-  OnSceneChangeStart:
+  onSceneChangeStart:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: Events+EventFadeComplete, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  OnSceneChangeComplete:
+  onSceneChangeComplete:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: Events+EventFadeComplete, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,

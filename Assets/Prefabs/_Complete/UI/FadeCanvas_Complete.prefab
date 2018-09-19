@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 225510701345338308}
   - component: {fileID: 114422289289747906}
   m_Layer: 0
-  m_Name: FadeCanvas
+  m_Name: FadeCanvas_Complete
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,9 +65,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14cfc5c9ae52e554592fba7bbff09727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Scenes: []
   screenFadeCanvas: {fileID: 225510701345338308}
   fadeDuration: 1
-  startingSceneName: Prototype
+  currentScene: 
   OnSceneChangeStart:
     m_PersistentCalls:
       m_Calls: []

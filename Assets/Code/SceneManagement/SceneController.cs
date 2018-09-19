@@ -1,24 +1,33 @@
 ﻿// ----------------------------------------------------------------------------
-// Author:  William O'Toole
-// Project: BitRivet Framework
-// Date:    20 JUNE 2018
+//  University of Pittsburgh  
+//  GamesEdu Workshop #2
+//  19 SEPT 2018
 // ----------------------------------------------------------------------------
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Events;
 
 /// <summary>
 /// Controls basic Scene Management functions
 /// </summary>
 public class SceneController : MonoBehaviour 
 {
-    public SceneItem[] Scenes;
+    /// <summary>
+    /// Array of SceneItems used to refered scenes loaded into the build index
+    /// </summary>
+    public List<SceneAsset> Scenes;
+    /// <summary>
+    /// CanvasGroup that has the Alpha we minipulate to create the "fade" effect
+    /// </summary>
     public CanvasGroup screenFadeCanvas;
+    /// <summary>
+    /// How long in seconds the screen fades from transparent to black.
+    /// </summary>
     public float fadeDuration = 1f;
-
+    /// <summary>
+    /// Current Name of the Scene that is loaded
+    /// </summary>
     [SerializeField]
     private string currentScene;
     public string CurrentScene
@@ -26,12 +35,22 @@ public class SceneController : MonoBehaviour
         get { return currentScene; }
         private set { currentScene = value; }
     }
-
+    /// <summary>
+    /// Bool check to make sure try to FadeAndLoad a scene while still in the fading sequence.
+    /// </summary>
     private bool isFading;
-
-    public Events.EventFadeComplete OnSceneChangeStart;
-    public Events.EventFadeComplete OnSceneChangeComplete;
-
+    /// <summary>
+    /// Event that will notify all subscribers that the SceneChange sequence has started
+    /// </summary>
+    public Events.EventFadeComplete onSceneChangeStart;
+    /// <summary>
+    /// Event that will notify all subscribers that the SceneChange sequence has completed
+    /// </summary>
+    public Events.EventFadeComplete onSceneChangeComplete;
+    /// <summary>
+    /// Starts the Fade and Switch Coroutine
+    /// </summary>
+    /// <param name="sceneName"></param>
     public void FadeAndLoadScene(string sceneName)
     {
         if (!isFading)
@@ -39,14 +58,19 @@ public class SceneController : MonoBehaviour
             StartCoroutine(FadeAndSwitchScenes(sceneName));
         }
     }
+    /// <summary>
+    /// Calls Coroutine Fade to black, async loads scene then fades away from black.
+    /// </summary>
+    /// <param name="sceneName"></param>
+    /// <returns></returns>
     private IEnumerator FadeAndSwitchScenes(string sceneName)
     {
         yield return StartCoroutine(Fade(1f));
         yield return SceneManager.LoadSceneAsync(sceneName);
-        OnSceneChangeStart.Invoke(true);
+        onSceneChangeStart.Invoke(true);
         yield return StartCoroutine(Fade(0f));
-        OnSceneChangeComplete.Invoke(true);
-        currentScene = sceneName;
+        onSceneChangeComplete.Invoke(true);
+        currentScene = SceneManager.GetActiveScene().name;
     }
 
     /// <summary>
