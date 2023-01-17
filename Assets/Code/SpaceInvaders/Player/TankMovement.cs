@@ -9,17 +9,14 @@ using UnityEngine;
 /// <summary>
 /// Moves Player Tank via Input Axis
 /// </summary>
-public class TankMovement : MonoBehaviour {
+public class TankMovement : MonoBehaviour 
+{
     [SerializeField]
     private float _moveRate;
-    public float MoveRate
-    {
-        get { return _moveRate; }
-        set { _moveRate = value; }
-    }
-    [SerializeField]
-    private Vector2 _axisInput;
-    public Vector2 AxisInput
+
+    [SerializeField, Header("Input Axis")]
+    private Vector2 _axisInput; // Think of this Vector 2 as a DPad controller 
+    /*public Vector2 AxisInput
     {
         get
         {
@@ -27,10 +24,11 @@ public class TankMovement : MonoBehaviour {
             return _axisInput;
         }
         private set { _axisInput = value; }
-    }
+    }*/
 
     private void Update()
     {
-        transform.Translate(AxisInput * Time.deltaTime * MoveRate);
+        _axisInput.Set(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        transform.Translate(_axisInput * Time.deltaTime * _moveRate);
     }
 }

@@ -21,9 +21,4 @@ public class AlienController : MonoBehaviour
     {
         alienManager.alienCount--;
     }
-    // Update is called once per frame
-    void Update ()
-    {
-		
-	}
 }

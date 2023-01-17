@@ -60,9 +60,13 @@ public class GameManager : Singleton<GameManager>
     {
         // If scene is changing return
         if (_currentGameState == GameState.SCENECHANGE)
-            return;        
+            return;
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePause();
+        }
     }
-
+    
     /// <summary>
     /// Updates GameState. Is call when another script triggers a state change. Can also be called directly.
     /// </summary>
