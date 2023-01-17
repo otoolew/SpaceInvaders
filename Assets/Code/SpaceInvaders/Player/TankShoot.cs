@@ -1,7 +1,7 @@
 ﻿// ----------------------------------------------------------------------------
-//  University of Pittsburgh  
-//  GamesEdu Workshop #2
-//  19 SEPT 2018
+//  Chatham University
+//  Week 3
+//  JANUARY 2023
 // ----------------------------------------------------------------------------
 using System.Collections;
 using System.Collections.Generic;

@@ -1,7 +1,7 @@
 ﻿// ----------------------------------------------------------------------------
-//  University of Pittsburgh
-//  GamesEdu Workshop #2
-//  19 SEPT 2018
+//  Chatham University
+//  Week 3
+//  JANUARY 2023
 // ----------------------------------------------------------------------------
 using UnityEngine;
 /// <summary>
@@ -11,7 +11,14 @@ using UnityEngine;
 public class GMData : ScriptableObject
 {
     /// <summary>
-    /// The persisten stored value of the GameManager State
+    /// The persistent stored value of the GameManager State
     /// </summary>
     public GameManager.GameState CurrentGameState;
+
+    private int highScore;
+
+    public void SetHighScore(int value)
+    {
+        highScore = value;
+    }
 }
