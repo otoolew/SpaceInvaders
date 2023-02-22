@@ -7,7 +7,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AlienMovement : MonoBehaviour {
+public class AlienMovement : MonoBehaviour 
+{
     public float moveBy = 1f;
     int numberOfMoves = 0;
 

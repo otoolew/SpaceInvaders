@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1482645704358528, guid: ab7f45beeaf4dd548bf616d37860945d, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 4442695930226848, guid: ab7f45beeaf4dd548bf616d37860945d, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -162,13 +166,62 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114389876806806596, guid: ab7f45beeaf4dd548bf616d37860945d,
+    - target: {fileID: 61405822548902684, guid: ab7f45beeaf4dd548bf616d37860945d,
         type: 3}
-      propertyPath: _axisInput.x
+      propertyPath: m_Size.x
+      value: 1.2352754
+      objectReference: {fileID: 0}
+    - target: {fileID: 61405822548902684, guid: ab7f45beeaf4dd548bf616d37860945d,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.32692823
+      objectReference: {fileID: 0}
+    - target: {fileID: 61405822548902684, guid: ab7f45beeaf4dd548bf616d37860945d,
+        type: 3}
+      propertyPath: m_Offset.x
+      value: -0.000000059604645
+      objectReference: {fileID: 0}
+    - target: {fileID: 61405822548902684, guid: ab7f45beeaf4dd548bf616d37860945d,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: -0.114173636
+      objectReference: {fileID: 0}
+    - target: {fileID: 61405822548902684, guid: ab7f45beeaf4dd548bf616d37860945d,
+        type: 3}
+      propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114389876806806596, guid: ab7f45beeaf4dd548bf616d37860945d, type: 3}
+    - target: {fileID: 61405822548902684, guid: ab7f45beeaf4dd548bf616d37860945d,
+        type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 751147104238354941, guid: ab7f45beeaf4dd548bf616d37860945d,
+        type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 751147104238354941, guid: ab7f45beeaf4dd548bf616d37860945d,
+        type: 3}
+      propertyPath: m_Simulated
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 751147104238354941, guid: ab7f45beeaf4dd548bf616d37860945d,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 751147104238354941, guid: ab7f45beeaf4dd548bf616d37860945d,
+        type: 3}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 751147104238354941, guid: ab7f45beeaf4dd548bf616d37860945d,
+        type: 3}
+      propertyPath: m_UseFullKinematicContacts
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab7f45beeaf4dd548bf616d37860945d, type: 3}
 --- !u!1 &60096126
 GameObject:
@@ -1378,8 +1431,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc197b216ebd86b4e9838bf079d6a7df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveRate: 10
-  _axisInput: {x: 0, y: 0}
+  moveRate: 10
+  minBounds: -10
+  maxBounds: 10
 --- !u!1 &2121695237
 GameObject:
   m_ObjectHideFlags: 0

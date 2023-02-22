@@ -1,7 +1,7 @@
 ﻿// ----------------------------------------------------------------------------
-//  University of Pittsburgh  
-//  GamesEdu Workshop #2
-//  19 SEPT 2018
+//  Chatham University  
+//  
+//  JAN 2023
 // ----------------------------------------------------------------------------
 using System.Collections;
 using System.Collections.Generic;
@@ -11,24 +11,25 @@ using UnityEngine;
 /// </summary>
 public class TankMovement : MonoBehaviour 
 {
+    [SerializeField,Header("Move Speed")]
+    private float moveRate;
+    
+    [SerializeField,Header("Move Speed")]
+    private float minBounds;
     [SerializeField]
-    private float _moveRate;
-
-    [SerializeField, Header("Input Axis")]
-    private Vector2 _axisInput; // Think of this Vector 2 as a DPad controller 
-    /*public Vector2 AxisInput
-    {
-        get
-        {
-            _axisInput.Set(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-            return _axisInput;
-        }
-        private set { _axisInput = value; }
-    }*/
-
+    private float maxBounds;
     private void Update()
     {
-        _axisInput.Set(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        transform.Translate(_axisInput * Time.deltaTime * _moveRate);
+        //Every update we will look for the input.GetAxis("Horizontal")
+        transform.Translate(Vector2.right * Input.GetAxis("Horizontal")  * Time.deltaTime * moveRate);
+        if (transform.position.x < minBounds)
+        {
+            transform.position = new Vector2(minBounds, 0);
+        }
+        else if (transform.position.x > maxBounds)
+        {
+            transform.position = new Vector2(maxBounds, 0);
+        }
+        
     }
 }

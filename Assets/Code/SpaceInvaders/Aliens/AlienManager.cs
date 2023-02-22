@@ -29,8 +29,7 @@ public class AlienManager : MonoBehaviour
         if (alienCount <= 0)
         {
             WinCondition = true;
-            GameManager.Instance.UpdateState(GameManager.GameState.GAMEOVER);
+            GameManager.Instance.GameOver();
         }
-            
     }
 }

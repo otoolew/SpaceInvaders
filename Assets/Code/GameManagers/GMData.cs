@@ -10,8 +10,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "newGameManagerData", menuName = "GameManager/GameData")]
 public class GMData : ScriptableObject
 {
-    /// <summary>
-    /// The persisten stored value of the GameManager State
-    /// </summary>
-    public GameManager.GameState CurrentGameState;
+    public int HighScore;
 }
